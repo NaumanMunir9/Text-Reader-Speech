@@ -57,9 +57,9 @@ const data = [
   },
 ];
 
-data.forEach(createBox);
+data.forEach(boxElement);
 
-function createBox(item) {
+function boxElement(item) {
   const box = document.createElement("div");
   const { image, text } = item;
 
@@ -82,7 +82,7 @@ function createBox(item) {
   main.appendChild(box);
 }
 
-// init Speech
+// init Web Speech API
 const message = new SpeechSynthesisUtterance();
 
 function setTextMessage(text) {
@@ -106,20 +106,20 @@ function getVoices() {
   });
 }
 
-function setVoice(e) {
+// Event Listener - SpeechSynthesis
+toggleBtn.addEventListener("click", () => {
+  textBox.classList.toggle("show");
+});
+closeBtn.addEventListener("click", () => {
+  textBox.classList.remove("show");
+});
+speechSynthesis.addEventListener("voiceschanged", getVoices);
+voicesSelect.addEventListener("change", (e) => {
   message.voice = voices.find((voice) => voice.name === e.target.value);
-}
-
-function textAreaSpeech() {
+});
+readBtn.addEventListener("click", () => {
   setTextMessage(textArea.value);
   speakText();
-}
-
-// event listener
-toggleBtn.addEventListener("click", () => textBox.classList.toggle("show"));
-closeBtn.addEventListener("click", () => textBox.classList.remove("show"));
-speechSynthesis.addEventListener("voiceschanged", getVoices);
-voicesSelect.addEventListener("change", setVoice);
-readBtn.addEventListener("click", textAreaSpeech);
+});
 
 getVoices();

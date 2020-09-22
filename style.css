@@ -1,14 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Oxygen&display=swap");
 
+:root {
+  --dark-green: #379683;
+  --light-green: #5cdb95;
+  --green-white: #edf5e1;
+}
+
 * {
   font-family: "Oxygen", sans-serif;
   box-sizing: border-box;
 }
 
 body {
-  background-color: #5cdb95;
+  background-color: var(--light-green);
   min-height: 100vh;
-  color: #edf5e1;
+  color: var(--green-white);
   margin: 0;
 }
 
@@ -23,8 +29,8 @@ h1 {
 
 .btn {
   cursor: pointer;
-  background-color: #379683;
-  color: #edf5e1;
+  background-color: var(--dark-green);
+  color: var(--green-white);
   border: 0;
   border-radius: 10px;
   outline: none;
@@ -50,8 +56,8 @@ h1 {
   top: 30%;
   left: 50%;
   transform: translate(-50%, -800px);
-  background-color: #edf5e1;
-  color: #379683;
+  background-color: var(--green-white);
+  color: var(--dark-green);
   padding: 20px;
   border-radius: 10px;
   transition: all 1s ease-in-out;
@@ -62,8 +68,8 @@ h1 {
 }
 
 .text-box select {
-  background-color: #379683;
-  color: #edf5e1;
+  background-color: var(--dark-green);
+  color: var(--green-white);
   font-size: 16px;
   outline: none;
   height: 30px;
@@ -72,7 +78,9 @@ h1 {
 }
 
 .text-box textarea {
-  border: 2px solid #379683;
+  background-color: transparent;
+  color: var(--dark-green);
+  border: 2px solid var(--dark-green);
   border-radius: 10px;
   font-size: 16px;
   padding: 10px;
@@ -91,8 +99,8 @@ h1 {
   text-align: right;
   cursor: pointer;
   padding: 4px 8px;
-  background-color: #379683;
-  color: #edf5e1;
+  background-color: var(--dark-green);
+  color: var(--green-white);
   font-weight: bolder;
   border-radius: 5px;
 }
@@ -104,7 +112,7 @@ main {
 }
 
 .box {
-  box-shadow: 0 2px 10px #379683;
+  box-shadow: 0 2px 10px var(--dark-green);
   border-radius: 10px;
   cursor: pointer;
   display: flex;
@@ -113,8 +121,8 @@ main {
   transition: box-shadow 0.2s ease-out;
 }
 
-.box:active {
-  box-shadow: 0 0 10px #379683;
+.box.active {
+  box-shadow: 0 0 10px 5px var(--dark-green);
 }
 
 .box img {
@@ -124,8 +132,8 @@ main {
 }
 
 .box .info {
-  background-color: #379683;
-  color: #edf5e1;
+  background-color: var(--dark-green);
+  color: var(--green-white);
   font-size: 18px;
   letter-spacing: 1px;
   text-transform: uppercase;

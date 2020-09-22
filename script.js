@@ -4,6 +4,7 @@ const textArea = document.getElementById("text");
 const readBtn = document.getElementById("read");
 const toggleBtn = document.getElementById("toggle");
 const closeBtn = document.getElementById("close");
+const textBox = document.getElementById("text-box");
 
 const data = [
   {
@@ -58,35 +59,41 @@ const data = [
 
 data.forEach(createBox);
 
-// function to createBox for each of the data on the DOM
 function createBox(item) {
   const box = document.createElement("div");
   const { image, text } = item;
+
   box.classList.add("box");
   box.innerHTML = `
     <img src="${image}" alt="${text}" />
     <p class="info" >${text}</p>
   `;
 
-  // box to speech - addEventListener on each box
   box.addEventListener("click", () => {
     setTextMessage(text);
     speakText();
 
-    // add active class
     box.classList.add("active");
     setTimeout(() => {
       box.classList.remove("active");
-    }, 800);
+    }, 500);
   });
 
   main.appendChild(box);
 }
 
-// Init speech synthesis
+// init Speech
 const message = new SpeechSynthesisUtterance();
 
-// store voices
+function setTextMessage(text) {
+  message.text = text;
+}
+
+function speakText() {
+  speechSynthesis.speak(message);
+}
+
+// Web Speech API
 let voices = [];
 
 function getVoices() {
@@ -94,46 +101,25 @@ function getVoices() {
   voices.forEach((voice) => {
     const option = document.createElement("option");
     option.value = voice.name;
-    option.innerHTML = `${voice.name} ${voice.lang}`;
+    option.innerText = `${voice.name} ${voice.lang}`;
     voicesSelect.appendChild(option);
   });
 }
 
-// set text
-function setTextMessage(text) {
-  message.text = text;
-}
-
-// speak the text
-function speakText() {
-  speechSynthesis.speak(message);
-}
-
-// function to change the speaker
 function setVoice(e) {
   message.voice = voices.find((voice) => voice.name === e.target.value);
 }
 
-// voices change - Event Listener
-speechSynthesis.addEventListener("voiceschanged", getVoices);
-
-// toggle text box - event listener on toggleBtn
-toggleBtn.addEventListener("click", () =>
-  document.getElementById("text-box").classList.toggle("show")
-);
-
-// close text box - event listener on closeBtn
-closeBtn.addEventListener("click", () =>
-  document.getElementById("text-box").classList.remove("show")
-);
-
-// change the speaker
-voicesSelect.addEventListener("change", setVoice);
-
-// read text in the text box
-readBtn.addEventListener("click", () => {
+function textAreaSpeech() {
   setTextMessage(textArea.value);
   speakText();
-});
+}
+
+// event listener
+toggleBtn.addEventListener("click", () => textBox.classList.toggle("show"));
+closeBtn.addEventListener("click", () => textBox.classList.remove("show"));
+speechSynthesis.addEventListener("voiceschanged", getVoices);
+voicesSelect.addEventListener("change", setVoice);
+readBtn.addEventListener("click", textAreaSpeech);
 
 getVoices();
